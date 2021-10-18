@@ -27,6 +27,7 @@ stages:
     deps:
       - config/config.yaml
       - src/stage_03_train.py
+      - src/utils/all_utils.py
       - artifacts/split_data_dir/train.csv
     params:
       - base.random_state
@@ -34,3 +35,14 @@ stages:
       - model_params.ElasticNet.l1_ratio
     outs:
       - artifacts/model_dir/ElasticNet.model
+
+  evaluate:
+    cmd: python src/stage_04_evaluate.py --config=config/config.yaml --params=params.yaml
+    deps:
+      - config/config.yaml
+      - src/utils/all_utils.py
+      - src/stage_04_evaluate.py
+      - artifacts/split_data_dir/test.csv
+      - artifacts\model_dir\ElasticNet.model
+    outs:
+      - artifacts\reports_dir\scores.json
