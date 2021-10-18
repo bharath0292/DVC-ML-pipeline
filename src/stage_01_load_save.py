@@ -1,3 +1,4 @@
+from genericpath import exists
 from yaml import parse
 from src.utils.all_utils import read_yaml,create_directory
 import argparse
@@ -7,8 +8,8 @@ import os
 def get_data(config_path):
     config=read_yaml(config_path)
 
-    remotr_data_path=config['data_source']
-    df=pd.read_csv(remotr_data_path,sep=';')
+    remote_data_path=config['data_source']
+    df=pd.read_csv(remote_data_path,sep=';')
 
     #save dataset into local directory
     
@@ -24,6 +25,10 @@ def get_data(config_path):
     raw_local_dir_file=os.path.join(raw_local_dir_path,raw_local_file)
 
     df.to_csv(raw_local_dir_file,sep=",",index=False)    
+
+
+
+
 
 if __name__=='__main__':
     args=argparse.ArgumentParser()
